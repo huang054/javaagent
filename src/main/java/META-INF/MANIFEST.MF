@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: javassist-3.18.2-GA.jar
+Premain-Class: javassisttest.javassisttest.MyJavassist
+
