@@ -15,6 +15,6 @@ public class AppTest
      */
 
     public static void main(String[] args) {
-        new service().say();
+        new service().say("hello world");
     }
 }
