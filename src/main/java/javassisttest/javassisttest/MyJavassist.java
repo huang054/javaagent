@@ -16,6 +16,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.Method;
 import java.security.ProtectionDomain;
+import java.text.DateFormat;
 import java.util.List;
 
 public class MyJavassist {
@@ -58,7 +59,7 @@ public class MyJavassist {
                         LocalVariableAttribute attr = (LocalVariableAttribute) codeAttribute.getAttribute(LocalVariableAttribute.tag);
                         String[] variableNames = new String[ctMethod.getParameterTypes().length];
                         System.out.println("返回类型:"+ctMethod.getReturnType());
-                        System.out.println("返回:"+ctMethod.getLongName());
+                        System.out.println("方法:"+ctMethod.getLongName());
                         int staticIndex = Modifier.isStatic(ctMethod.getModifiers()) ? 0 : 1;
                         for (int i = 0; i < variableNames.length; i++)  {
                             variableNames[i] = attr.variableName(i + staticIndex);
@@ -67,9 +68,9 @@ public class MyJavassist {
 
                             }
                         }
-                        for (int i = 0; i < variableNames.length; i++){
+                       /* for (int i = 0; i < variableNames.length; i++){
                             System.out.println(variableNames[i]+":"+variableNames[i]);
-                        }
+                        }*/
                       //  System.out.println(variableNames.toString());
                         //ctMethod.insertBefore("System.out.println(System.currentTimeMillis());");
                         String methodName = ctMethod.getName();
@@ -80,11 +81,18 @@ public class MyJavassist {
 
                                 + "throw $e; }", etype);
                         // 创建新的方法，复制原来的方法，名字为原来的名字
+
                         CtMethod newMethod = CtNewMethod.copy(ctMethod, methodName, ctClass, null);
                         String type = ctMethod.getReturnType().getName();
                         // 构建新的方法体
                         StringBuilder bodyStr = new StringBuilder();
                         bodyStr.append("{");
+                        for (int i = 0; i < variableNames.length; i++){
+                            int j=i+1;
+
+                            bodyStr.append("System.out.println(\"==============param: " +variableNames[i]+":\"+$"+j+"+\"" + " ==============\");");
+                        }
+                      // bodyStr.append("System.out.println(\"==============param: " +"\"+$1+\"" + " ==============\");");
                         bodyStr.append("System.out.println(\"==============Enter Method: " + className + "." + methodName + " ==============\");");
                         bodyStr.append(prefix);
                         if(!"void".equals(type)) {
@@ -94,6 +102,7 @@ public class MyJavassist {
                     //    bodyStr.append("return ($R);\n");
                         bodyStr.append(postfix);
                         bodyStr.append("System.out.println(\"==============Exit Method: " + className + "." + methodName + " Cost:\" +(endTime - startTime) +\"ms " + "===\");");
+                        bodyStr.append("System.out.println(\"==============return result: " +"\"+result+\"" + " ==============\");");
                         if(!"void".equals(type)) {
                             bodyStr.append("return result;\n");
                         }
