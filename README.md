@@ -28,3 +28,4 @@ javaagent javassist的学习
 然后通过maven打包，记得要指定premain的路径生成MANIFEST.MF文件
 ![addTransformer](https://github.com/huang054/javaagent/blob/master/javassist10.png)
 最后在我们运行的main方法vm中加上javaagent参数，还有pom文件要引入javassist的jar包
+![addTransformer](https://github.com/huang054/javaagent/blob/master/javassist11.png)
