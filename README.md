@@ -23,6 +23,7 @@ javaagent javassist的学习
 ![addTransformer](https://github.com/huang054/javaagent/blob/master/javassist7.png)
 比如你要打印时间你就可以insert after 自己的代码，但是这种是在代码块里，并不能计算出方法执行的时间
 ![addTransformer](https://github.com/huang054/javaagent/blob/master/javassist8.png)
+![addTransformer](https://github.com/huang054/javaagent/blob/master/javassist13.png)
 这里怎么办了，我们这里只能在原来方法通过copy一个新方法然后在新方法里拼接字节码实现我们需要的功能然后返回字节码
 ![addTransformer](https://github.com/huang054/javaagent/blob/master/javassist9.png)
 然后通过maven打包，记得要指定premain的路径生成MANIFEST.MF文件
